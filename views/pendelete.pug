@@ -1,0 +1,52 @@
+extends layout 
+ 
+block content 
+  h1= title 
+  if (toShow == null) 
+    h2 No instance to delete 
+  else 
+    - let pensid = toShow._id 
+    - let Pen_Company = toShow.Pen_Company
+    - let Pen_cost = toShow.size 
+    - let Pen_color = toShow.Pen_color
+    - let actionid = "/resource/pens/" + pensid 
+    script let actionid = "#{actionid}" 
+    div 
+      div.row 
+        div(class='pendelete') pens ID is: 
+        div #{pensid}
+      div.row 
+        div(class='pendelete') pens Pen_Company is: 
+        div #{Pen_Company}   
+      div.row 
+        div(class='pendelete') pens Pen_color is: 
+        div #{Pen_color} 
+      div.row 
+        div(class='pendelete') pens Pen_cost is: 
+        div #{Pen_cost} 
+ 
+    button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete 
+    button(class="btn btn-secondary m-2" onclick="cancel()") Cancel 
+ 
+  script. 
+    function cancel() { 
+      // Go back to the home page for the pens collection 
+      window.location.href='/pens' 
+    } 
+  script. 
+    function deleteOnid() { 
+      console.log("starting delete") 
+      // delete first 
+      fetch(actionid, { 
+        method: 'DELETE'  
+      }).then((resp) => { 
+        return resp.json(); // or resp.text() or whatever the server sends 
+      }).then((body) => { 
+        alert("Delete succeded") 
+        window.location.href='/pens' 
+        // TODO handle body 
+      }).catch((error) => { 
+        // TODO handle error 
+        alert("Delete failed " + error ) 
+      }); 
+    } 
