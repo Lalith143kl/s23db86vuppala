@@ -2,18 +2,29 @@ extends layout
 
 block content
   h1= title
-  - let items = results;
+  - let pens = results;
+  - let createM = `dispatch(\"/pen/create\")`
+  button.btn( class="btn-primary ml-1", onclick= createM) Create
   div(class="container-fluid")
     div(class="row")
-      each item,index in items
+      each item in pens
         - let destination = `dispatch(\"/pen/update?id=${item._id}\")`
-        div(class="col-sm-2" class="m-1")
-          h3 #{item.Pen_Company}
-          p #{item.Pen_color}
-          p #{item.Pen_cost}
-          button.btn( class="btn-primary ml-1", onclick= destination) Update
+        - let detail = `dispatch(\"/pen/detail?id=${item._id}\")`
+        - let deleteN = `dispatch(\"/pen/delete?id=${item._id}\")`
+          div(class="col-sm-2",onClick=`buy(${index})`)
+            div(class="row-sm-2", class="m-1") #{item.Pen_Company} pen of color #{item.Pen_color}  is #{item.Pen_cost}
+           
+            button.btn( class="btn-primary ml-1", onclick= destination) Update
+            button.btn( class="btn-primary ml-1", onclick= deleteN) Delete
+            button.btn( class="btn-primary ml-1", onclick= detail) Detail
+
+
+
   script.
+    //- function buy((itemNo)) {
+    //-   alert(`You purchased Item ${itemNo+1}`)
+    //- }
+
     function dispatch(path){
-      console.log(path);
-      window.location.href=path;
+      window.location.href=path
     }
