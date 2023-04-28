@@ -3,7 +3,7 @@ const PenSchema = mongoose.Schema({
     
     Pen_color:{
         type:String,
-        minLength:2
+        minLength:3
     },
     Pen_Company: String,
     Pen_cost:{
